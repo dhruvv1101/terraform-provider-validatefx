@@ -43,5 +43,11 @@ func TestURLValidatorInvalid(t *testing.T) {
 		"invalid",
 		"ftp://",
 	}
-
-	v :
+	v := URL()
+	for _, url := range invalidURLs {
+		diags := runURLValidation(v, types.StringValue(url))
+		if !diags.HasError() {
+			t.Errorf("Expected error for invalid URL, got none for: %s", url)
+		}
+	}
+}
